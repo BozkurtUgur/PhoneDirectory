@@ -98,7 +98,7 @@
                     <div class="col-xs-12">
                       <div class="row between-xs" *ngIf="!isNewDepartment">
                         <button mat-raised-button color="primary" (click)="onUpdate()" [disabled]="departmentForm.invalid">Kaydet</button>
-                        <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="onDelete()" [disabled]="departmentForm.invalid">Sil</button>
+                        <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="openDeleteConfirmationDialog()" [disabled]="departmentForm.invalid">Sil</button>
                       </div>
                       <div class="row between-xs" *ngIf="isNewDepartment">
                         <button mat-raised-button color="primary" (click)="onAdd()" [disabled]="departmentForm.invalid">Kaydet</button>

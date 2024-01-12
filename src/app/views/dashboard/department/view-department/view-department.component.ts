@@ -16,6 +16,8 @@ import { Address } from "app/shared/models/address.model";
 import { Department } from "app/shared/models/department.model";
 import { AddressService } from "app/shared/services/address.service";
 import { DepartmentService } from "app/shared/services/department.service";
+import { MatDialog } from "@angular/material/dialog";
+import { AppComfirmComponent } from "app/shared/services/app-confirm/app-confirm.component";
 
 @Component({
   selector: "app-view-department",
@@ -46,7 +48,8 @@ export class ViewDepartmentComponent implements OnInit {
   addressList: Address[] = [];
   isNewDepartment = false;
   header = "";
-  constructor(
+  constructor(    
+    public dialog: MatDialog,
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
     private deparmentService: DepartmentService,
@@ -54,6 +57,25 @@ export class ViewDepartmentComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private router: Router
   ) {}
+
+  openDeleteConfirmationDialog(): void {
+    const dialogRef = this.dialog.open(AppComfirmComponent, {
+      width: '400px',
+      data: {
+        title: 'Uyarı!',
+        message: 'Müdürlük kaydını silmek istediğinize emin misiniz?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.onDelete();
+        console.log('Item deleted!');
+      } else {
+        console.log('Deletion canceled.');
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.loading = true;

@@ -41,7 +41,7 @@
             <div class="row between-xs" *ngIf="!isNewAddress">
               <button mat-raised-button color="primary" (click)="onUpdate()"
                 [disabled]="addressForm.invalid">Kaydet</button>
-              <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="onDelete()"
+              <button mat-raised-button color="warn" style="margin-left: 10px;" (click)="openDeleteConfirmationDialog()"
                 [disabled]="addressForm.invalid">Sil</button>
             </div>
             <div class="row between-xs" *ngIf="isNewAddress">

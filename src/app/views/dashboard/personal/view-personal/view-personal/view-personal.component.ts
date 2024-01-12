@@ -16,6 +16,8 @@ import { DepartmentSection } from "app/shared/models/departmentSection.model";
 import { Personal } from "app/shared/models/personal.model";
 import { DepartmentService } from "app/shared/services/department.service";
 import { PersonalService } from "app/shared/services/personal.service";
+import { MatDialog } from "@angular/material/dialog";
+import { AppComfirmComponent } from "app/shared/services/app-confirm/app-confirm.component";
 
 @Component({
   selector: "app-view-personal",
@@ -64,6 +66,7 @@ export class ViewPersonalComponent implements OnInit {
   header = "";
   displayProfileImageUrl = "";
   constructor(
+    public dialog: MatDialog,
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
     private personalService: PersonalService,
@@ -71,6 +74,25 @@ export class ViewPersonalComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private router: Router
   ) { }
+
+  openDeleteConfirmationDialog(): void {
+    const dialogRef = this.dialog.open(AppComfirmComponent, {
+      width: '400px',
+      data: {
+        title: 'Uyarı!',
+        message: 'Personel kaydını silmek istediğinize emin misiniz?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.onDelete();
+        console.log('Item deleted!');
+      } else {
+        console.log('Deletion canceled.');
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.loading = true;
@@ -207,6 +229,7 @@ export class ViewPersonalComponent implements OnInit {
   }
 
   onDelete() {
+    
     this.console.log("deletegirdi");
     debugger;
     this.personalService
@@ -230,6 +253,7 @@ export class ViewPersonalComponent implements OnInit {
           });
         }
       );
+    
   }
 
   onAdd() {
